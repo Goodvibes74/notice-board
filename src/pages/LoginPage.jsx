@@ -15,7 +15,10 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "noir");
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved === "noir" || saved === "warm" ? "dark" : (saved || "dark");
+  });
   const navigate = useNavigate();
 
   // Sync theme to document and localStorage
@@ -66,13 +69,18 @@ export default function LoginPage() {
   }
 
   function toggleTheme() {
-    const themes = ["noir", "warm"];
+    const themes = ["dark", "light", "cyberpunk"];
     const nextIndex = (themes.indexOf(theme) + 1) % themes.length;
     setTheme(themes[nextIndex]);
   }
 
   return (
     <div className="login-split" style={styles.container}>
+      {/* Background Animated Blobs */}
+      <div className="glow-blob blob-1"></div>
+      <div className="glow-blob blob-2"></div>
+      <div className="glow-mesh"></div>
+
       {/* ─── LEFT SIDE: Brand Hero ─── */}
       <div className="login-brand anim-slide-up" style={styles.brandPanel}>
         {/* Radial gradient overlay */}
@@ -111,15 +119,11 @@ export default function LoginPage() {
           id="theme-toggle-btn"
           className="btn-ghost"
           onClick={toggleTheme}
-          style={styles.themeToggle}
-          title={`Switch to ${theme === "noir" ? "warm" : "noir"} theme`}
+          style={{ ...styles.themeToggle, display: "flex", alignItems: "center", gap: "6px" }}
+          title={`Active Theme: ${theme}. Click to switch.`}
         >
-          {theme === "noir" ? (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-          ) : (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          {theme === "light" ? (
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="5" />
               <line x1="12" y1="1" x2="12" y2="3" />
               <line x1="12" y1="21" x2="12" y2="23" />
@@ -130,7 +134,16 @@ export default function LoginPage() {
               <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
             </svg>
+          ) : theme === "cyberpunk" ? (
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41M13 12a1 1 0 11-2 0 1 1 0 012 0z" />
+            </svg>
+          ) : (
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
           )}
+          <span style={{ textTransform: "capitalize", fontSize: "0.8rem", fontWeight: 600 }}>{theme}</span>
         </button>
 
         <div className="anim-slide-up delay-2" style={styles.formContent}>
