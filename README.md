@@ -2,6 +2,12 @@
 
 A premium, cloud-native notice board application designed for real-time team bulletins, built as a **Cloud Computing Project**. The application utilizes a serverless architecture powered by **Firebase**, and features a fully responsive masonry dashboard with a dynamic theme engine (Dark, Light, and Cyberpunk). It also supports Docker containerisation for cloud hosting.
 
+### 🔗 Project Links
+
+* **GitHub Repository:** [Goodvibes74/notice-board](https://github.com/Goodvibes74/notice-board)
+* **Live Web App (Firebase Hosting):** [notice-board-13b6d.web.app](https://notice-board-13b6d.web.app)
+* **Docker Hub Image:** [goodvibes74/notice-board](https://hub.docker.com/r/goodvibes74/notice-board)
+
 ---
 
 ## 🚀 Key Features
@@ -30,7 +36,7 @@ A premium, cloud-native notice board application designed for real-time team bul
   * [Firebase Authentication](https://firebase.google.com/docs/auth) (Email & Password provider)
   * [Cloud Firestore](https://firebase.google.com/docs/firestore) (Serverless NoSQL Database)
   * [Firebase Cloud Functions](https://firebase.google.com/docs/functions) (Event-driven background handlers)
-* **Web Server & Containerization:** [Nginx](https://www.nginx.com/) and [Docker](https://www.docker.com/)
+* **Web Server & Containerization:** [Nginx](https://www.nginx.com/) and [Docker](https://www.docker.com/) (Image hosted on [Docker Hub](https://hub.docker.com/r/goodvibes74/notice-board))
 * **Document Compilation:** [docx](https://docx.js.org/) for generating the academic project report
 
 ### Architectural Diagram
@@ -131,11 +137,21 @@ firebase emulators:start
 
 ### Deployment
 
-To deploy the cloud function to the active Firebase project:
+To deploy the cloud function and hosting assets to the active Firebase project:
 
 ```bash
+# Deploy functions only
 firebase deploy --only functions
+
+# Build and deploy frontend only
+npm run build
+firebase deploy --only hosting
+
+# Deploy everything
+firebase deploy
 ```
+
+The live web application is deployed and hosted at [https://notice-board-13b6d.web.app](https://notice-board-13b6d.web.app).
 
 ---
 
@@ -145,6 +161,17 @@ The application is containerized utilizing a two-stage Docker workflow:
 
 * **Stage 1 (Build):** Compiles the React application using Node Alpine.
 * **Stage 2 (Serve):** Copies built files to Nginx Alpine and serves them on Port 80.
+
+The pre-built image is published and available on [Docker Hub](https://hub.docker.com/r/goodvibes74/notice-board).
+
+### Pull & Run from Docker Hub
+
+You can pull and run the pre-built image directly from Docker Hub:
+
+```bash
+docker pull goodvibes74/notice-board
+docker run -d -p 8080:80 goodvibes74/notice-board
+```
 
 ### Build the Image
 
@@ -165,14 +192,6 @@ docker run -d -p 8080:80 community-notice-board
 Visit the app at `http://localhost:8080`.
 
 ---
-
-## 📄 Generating the Academic Report
-
-A dedicated generator script compiling a Word Document (`.docx`) detailing the project architecture, design choices, database schema, security features, and deploy pipeline is included.
-
-### Requirements
-
-To run the generator, ensure Node is installed. You may need to run `npm install docx` in the project root if it is not already cached locally.
 
 ### Execute Generation
 

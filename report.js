@@ -213,8 +213,23 @@ const doc = new Document({
       }),
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { before: 0, after: 600 },
+        spacing: { before: 0, after: 300 },
         children: [new TextRun({ text: "React  \u2022  Firebase  \u2022  Docker", font: "Arial", size: 24, color: "888888", italics: true })]
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 0, after: 80 },
+        children: [new TextRun({ text: "GitHub: https://github.com/Goodvibes74/notice-board", font: "Arial", size: 14, color: "555555" })]
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 0, after: 80 },
+        children: [new TextRun({ text: "Firebase Deploy: https://notice-board-13b6d.web.app", font: "Arial", size: 14, color: "555555" })]
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 0, after: 300 },
+        children: [new TextRun({ text: "Docker Hub: https://hub.docker.com/r/goodvibes74/notice-board", font: "Arial", size: 14, color: "555555" })]
       }),
       divider(),
       new Paragraph({
@@ -264,6 +279,22 @@ const doc = new Document({
         ],
         [2200, 2600, 4226]
       ),
+      spacer(),
+      paraRuns([
+        { text: "The project's active repositories and deployments are available online:" }
+      ]),
+      bulletRuns([
+        { text: "GitHub Repository: ", bold: true },
+        { text: "https://github.com/Goodvibes74/notice-board" }
+      ]),
+      bulletRuns([
+        { text: "Live Web Deployment: ", bold: true },
+        { text: "https://notice-board-13b6d.web.app" }
+      ]),
+      bulletRuns([
+        { text: "Docker Hub Image: ", bold: true },
+        { text: "https://hub.docker.com/r/goodvibes74/notice-board" }
+      ]),
       spacer(),
 
       h2("1.3 Cloud Computing Concepts Demonstrated"),
@@ -489,15 +520,25 @@ const doc = new Document({
       para("An nginx.conf file was also created to handle React Router's client-side routing. Without this configuration, direct navigation to sub-routes such as /board returns a 404 error because Nginx looks for a physical file at that path. The try_files directive instructs Nginx to fall back to index.html for any path, allowing React Router to handle routing on the client side."),
 
       h2("4.7 Docker Hub Deployment"),
-      para("Once the image was built and verified locally, it was tagged with the Docker Hub repository name and pushed to the public registry:"),
+      para("Once the image was built and verified locally, it was tagged with the Docker Hub repository name and pushed to the public registry at https://hub.docker.com/r/goodvibes74/notice-board:"),
       spacer(),
       ...codeBlock([
         "docker build -t notice-board .",
-        "docker tag notice-board USERNAME/notice-board:v1",
-        "docker push USERNAME/notice-board:v1",
+        "docker tag notice-board goodvibes74/notice-board:latest",
+        "docker push goodvibes74/notice-board:latest",
       ]),
       spacer(),
-      para("The image is now publicly accessible on Docker Hub. Any machine with Docker installed can pull and run the application without a local build environment — demonstrating the portability and reproducibility that containerisation provides."),
+      paraRuns([
+        { text: "The image is now publicly accessible on Docker Hub at " },
+        { text: "https://hub.docker.com/r/goodvibes74/notice-board", bold: true },
+        { text: ". Any machine with Docker installed can pull and run the application using: " }
+      ]),
+      spacer(),
+      ...codeBlock([
+        "docker pull goodvibes74/notice-board:latest",
+        "docker run -d -p 8080:80 goodvibes74/notice-board:latest"
+      ]),
+      spacer(),
 
       // ─── 5. CHALLENGES AND TROUBLESHOOTING ───────────────────────
       new Paragraph({ children: [new PageBreak()] }),
@@ -557,8 +598,8 @@ const doc = new Document({
       para("After pushing the image to Docker Hub, the image was verified by removing the local copy and pulling it fresh from the registry:"),
       spacer(),
       ...codeBlock([
-        "docker rmi USERNAME/notice-board:v1",
-        "docker run -p 8080:80 USERNAME/notice-board:v1",
+        "docker rmi goodvibes74/notice-board:latest",
+        "docker run -d -p 8080:80 goodvibes74/notice-board:latest",
       ]),
       spacer(),
       para("This confirmed that the image was self-contained and could be deployed to any machine or cloud environment without access to the original source code or build environment."),
