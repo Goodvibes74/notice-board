@@ -43,7 +43,7 @@ A premium, cloud-native notice board application designed for real-time team bul
 
 ```
 [ Client Browser ] <---(Real-time Streams)---> [ Cloud Firestore ]
-        |                                             ^
+        |                                              ^
         |--(Auth Checks)--> [ Firebase Auth ]          |
         |                                       (Trigger Function)
         |-----------------------------------------[ Cloud Functions ]
