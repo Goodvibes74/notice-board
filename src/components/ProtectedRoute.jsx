@@ -19,16 +19,30 @@ export default function ProtectedRoute({ children }) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "var(--bg-primary, #0a0f1d)",
-        color: "var(--text-primary, #f8fafc)",
-        fontFamily: "var(--font-body, system-ui)",
-        gap: "1rem"
+        background: "var(--bg-base, #0B0B0B)",
+        gap: "1.5rem",
       }}>
-        <div className="spinner" style={{ width: "32px", height: "32px", borderTopColor: "var(--primary-accent, #6366f1)" }}></div>
-        <span style={{ fontSize: "0.85rem", color: "var(--text-secondary, #94a3b8)", letterSpacing: "0.05em" }}>Verifying Session...</span>
+        <div style={{
+          width: "28px",
+          height: "28px",
+          border: "2px solid var(--border, rgba(255,255,255,0.06))",
+          borderRadius: "50%",
+          borderTopColor: "var(--accent, #D4553A)",
+          animation: "spin 0.7s linear infinite",
+        }} />
+        <span style={{
+          fontFamily: "var(--font-display, Georgia)",
+          fontStyle: "italic",
+          fontSize: "1rem",
+          color: "var(--text-muted, #5C5A56)",
+          letterSpacing: "0.02em",
+        }}>
+          Verifying session…
+        </span>
       </div>
     );
   }
+
   if (!user) return <Navigate to="/login" />;
   return children;
 }
