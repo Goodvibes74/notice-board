@@ -192,13 +192,3 @@ docker run -d -p 8080:80 community-notice-board
 Visit the app at `http://localhost:8080`.
 
 ---
-
-### Execute Generation
-
-Run the script from the root directory:
-
-```bash
-node report.js
-```
-
-The generated document will be saved directly into `/mnt/user-data/outputs/Notice_Board_Cloud_Project_Report.docx` (or your defined system path).
